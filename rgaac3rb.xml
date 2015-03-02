@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" version="3.4" method="upgrade" client="site" group="system">
+  <name>System - Rgaac3rb</name>
+  <creationDate>02/03/2015</creationDate>
+  <author>C3rb Informatique</author>
+  <authorEmail>orphee@c3rb.fr</authorEmail>
+  <authorUrl>www.c3rb.org</authorUrl>
+  <copyright>Copyright (C) 2015 C3RB Informatique. All rights reserved.</copyright>
+  <version>1.0.0.0</version>
+  <description>Plugin system pour template rgaac3rb</description>
+  <files>
+    <filename plugin="rgaac3rb">rgaac3rb.php</filename>
+  </files>
+</extension>
