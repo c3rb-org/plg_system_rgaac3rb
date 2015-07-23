@@ -1,14 +1,60 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <extension type="plugin" version="3.4" method="upgrade" client="site" group="system">
-  <name>System - Rgaac3rb</name>
+  <name>plg_system_rgaac3rb</name>
   <creationDate>02/03/2015</creationDate>
   <author>C3rb Informatique</author>
   <authorEmail>orphee@c3rb.fr</authorEmail>
   <authorUrl>www.c3rb.org</authorUrl>
   <copyright>Copyright (C) 2015 C3RB Informatique. All rights reserved.</copyright>
   <version>1.0.0.0</version>
-  <description>Plugin system pour template rgaac3rb</description>
+  <description>PLG_SYSTEM_RGAAC3RB_XML_DESC</description>
   <files>
     <filename plugin="rgaac3rb">rgaac3rb.php</filename>
   </files>
+  <media destination="plg_system_rgaac3rb" folder="media">
+    <folder>js</folder>
+    <filename>index.html</filename>
+  </media>
+  <languages>
+    <language tag="fr-FR">language/fr-FR/fr-FR.plg_system_rgaac3rb.ini</language>
+    <language tag="fr-FR">language/fr-FR/fr-FR.plg_system_rgaac3rb.sys.ini</language>
+  </languages>
+  <config>
+    <fields name="params">
+      <fieldset name="less">
+        <field name="mode" type="list" description="PLG_SYSTEM_RGAAC3RB_FIELD_MODE_DESC" label="PLG_SYSTEM_RGAAC3RB_FIELD_MODE_LABEL" default="0">
+          <option value="0">PLG_SYSTEM_RGAAC3RB_FIELD_MODE_FRONTEND</option>
+          <option value="1">PLG_SYSTEM_RGAAC3RB_FIELD_MODE_ADMIN</option>
+          <option value="2">PLG_SYSTEM_RGAAC3RB_FIELD_MODE_BOTH</option>
+        </field>
+        <field name="sitespacer" type="spacer" class="text" label="PLG_SYSTEM_RGAAC3RB_SITESPACER" />
+        <field name="sitelessc" type="filelist" default="lessphp-1.7.0.3" label="PLG_SYSTEM_RGAAC3RB_FIELD_SITELESSC_LABEL" description="PLG_SYSTEM_RGAAC3RB_FIELD_SITELESSC_DESC" directory="plugins/system/lessc3rb/lessc" filter="\.php" exclude="" stripext="1" hide_none="1" hide_default="1"/>
+        <field name="lessfile" type="text" description="PLG_SYSTEM_RGAAC3RB_FIELD_LESSFILE_DESC" label="PLG_SYSTEM_RGAAC3RB_FIELD_LESSFILE_LABEL" default="css/less/mix.template.less" size="37"/>
+        <field name="cssfile" type="text" description="PLG_SYSTEM_RGAAC3RB_FIELD_CSSFILE_DESC" label="PLG_SYSTEM_RGAAC3RB_FIELD_CSSFILE_LABEL" default="css/template.min.css" size="37"/>
+        <field type="spacer" name="adminspacer" class="text" label="PLG_SYSTEM_RGAAC3RB_ADMINSPACER"/>
+        <field name="adminlessc" type="filelist" default="lessphp-1.7.0.3" label="PLG_SYSTEM_RGAAC3RB_FIELD_ADMINLESSC_LABEL" description="PLG_SYSTEM_RGAAC3RB_FIELD_ADMINLESSC_DESC" directory="plugins/system/lessc3rb/lessc" filter="\.php" exclude="" stripext="1" hide_none="1" hide_default="1" />
+        <field name="admin_lessfile" type="text" description="PLG_SYSTEM_RGAAC3RB_FIELD_ADMINLESSFILE_DESC" label="PLG_SYSTEM_RGAAC3RB_FIELD_ADMINLESSFILE_LABEL" default="css/less/mix.template.less" size="37"/>
+        <field name="admin_cssfile" type="text" description="PLG_SYSTEM_RGAAC3RB_FIELD_ADMINCSSFILE_DESC" label="PLG_SYSTEM_RGAAC3RB_FIELD_ADMINCSSFILE_LABEL" default="css/template.min.css" size="37" />
+        <field type="spacer" name="lessspacer" class="text" label="PLG_SYSTEM_RGAAC3RB_LESSSPACER" />
+        <field name="less_force" type="radio" description="PLG_SYSTEM_RGAAC3RB_FIELD_FORCE_DESC" label="PLG_SYSTEM_RGAAC3RB_FIELD_FORCE_LABEL" default="0" class="btn-group btn-group-yesno">
+          <option value="0">JNO</option>
+          <option value="1">JYES</option>
+        </field>
+        <field name="less_comments" type="radio" description="PLG_SYSTEM_RGAAC3RB_FIELD_COMMENTS_DESC" label="PLG_SYSTEM_RGAAC3RB_FIELD_COMMENTS_LABEL" default="0" class="btn-group btn-group-yesno">
+          <option value="0">JNO</option>
+          <option value="1">JYES</option>
+        </field>
+        <field name="less_compress" type="radio" description="PLG_SYSTEM_RGAAC3RB_FIELD_COMPRESSION_DESC" label="PLG_SYSTEM_RGAAC3RB_FIELD_COMPRESSION_LABEL" default="1" class="btn-group btn-group-yesno">
+          <option value="0">JNO</option>
+          <option value="1">JYES</option>
+        </field>
+
+        <field type="spacer" name="clientsidespacer" class="text" label="PLG_SYSTEM_RGAAC3RB_CLIENTSIDESPACER"/>
+        <field name="clientside_enable" type="radio" description="PLG_SYSTEM_RGAAC3RB_FIELD_CLIENTSIDE_ENABLE_DESC" label="PLG_SYSTEM_RGAAC3RB_FIELD_CLIENTSIDE_ENABLE_LABEL" default="0" class="btn-group btn-group-yesno">
+          <option value="0">JNO</option>
+          <option value="1">JYES</option>
+        </field>
+      </fieldset>
+    </fields>
+  </config>
 </extension>
