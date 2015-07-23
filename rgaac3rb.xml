@@ -10,6 +10,7 @@
   <description>PLG_SYSTEM_RGAAC3RB_XML_DESC</description>
   <files>
     <filename plugin="rgaac3rb">rgaac3rb.php</filename>
+    <folder>lessc</folder>
   </files>
   <media destination="plg_system_rgaac3rb" folder="media">
     <folder>js</folder>
