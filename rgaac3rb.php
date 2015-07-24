@@ -42,7 +42,7 @@ class plgSystemRgaac3rb extends JPlugin
 		// 0 = frontend only
 		// 1 = backend only
 		// 2 = front + backend
-		$mode = $this->params->get('mode', 0);
+		$mode = $this->params->get('mode', -1);
 
 		//only execute frontend
 		if ($this->app->isSite() && ($mode == 0 || $mode == 2))
@@ -71,7 +71,7 @@ class plgSystemRgaac3rb extends JPlugin
 		}
 
 		//check if .less file exists and is readable
-		if (is_readable($lessFile))
+		if (is_readable($lessFile) && $mode != -1)
 		{
 			if ((bool) $this->params->get('clientside_enable', 0))
 			{

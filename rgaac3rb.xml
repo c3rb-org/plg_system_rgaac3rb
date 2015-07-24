@@ -24,6 +24,7 @@
     <fields name="params">
       <fieldset name="less">
         <field name="mode" type="list" description="PLG_SYSTEM_RGAAC3RB_FIELD_MODE_DESC" label="PLG_SYSTEM_RGAAC3RB_FIELD_MODE_LABEL" default="0">
+          <option value="-1">PLG_SYSTEM_RGAAC3RB_FIELD_MODE_DISABLED</option>
           <option value="0">PLG_SYSTEM_RGAAC3RB_FIELD_MODE_FRONTEND</option>
           <option value="1">PLG_SYSTEM_RGAAC3RB_FIELD_MODE_ADMIN</option>
           <option value="2">PLG_SYSTEM_RGAAC3RB_FIELD_MODE_BOTH</option>
