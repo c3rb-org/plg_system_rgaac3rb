@@ -149,11 +149,11 @@ class lessc3rb{
 
 		$parser = new Less_Parser($this->getOptions());
 		$parser->SetImportDirs($this->getImportDirs());
-		if( count( $this->registeredVars ) ) $parser->ModifyVars( $this->registeredVars );
 		foreach ($this->libFunctions as $name => $func) {
 			$parser->registerFunction($name, $func);
 		}
 		$parser->parseFile($fname);
+		if( count( $this->registeredVars ) ) $parser->ModifyVars( $this->registeredVars );
 		$out = $parser->getCss();
 
 		$parsed = Less_Parser::AllParsedFiles();
