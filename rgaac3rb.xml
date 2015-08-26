@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <extension type="plugin" version="3.4" method="upgrade" client="site" group="system">
   <name>plg_system_rgaac3rb</name>
   <creationDate>02/03/2015</creationDate>
@@ -29,12 +29,16 @@
           <option value="1">PLG_SYSTEM_RGAAC3RB_FIELD_MODE_ADMIN</option>
           <option value="2">PLG_SYSTEM_RGAAC3RB_FIELD_MODE_BOTH</option>
         </field>
+        <field name="less_template" type="radio" description="PLG_SYSTEM_RGAAC3RB_FIELD_TEMPLATE_VARIABLES_DESC" label="PLG_SYSTEM_RGAAC3RB_FIELD_TEMPLATE_VARIABLES_LABEL" default="0" class="btn-group btn-group-yesno">
+          <option value="0">JNO</option>
+          <option value="1">JYES</option>
+        </field>
         <field name="sitespacer" type="spacer" class="text" label="PLG_SYSTEM_RGAAC3RB_SITESPACER" />
-        <field name="sitelessc" type="filelist" default="lessphp-1.7.0.3" label="PLG_SYSTEM_RGAAC3RB_FIELD_SITELESSC_LABEL" description="PLG_SYSTEM_RGAAC3RB_FIELD_SITELESSC_DESC" directory="plugins/system/rgaac3rb/lessc" filter="\.php" exclude="" stripext="1" hide_none="1" hide_default="1"/>
+        <field name="sitelessc" type="filelist" default="lessphp-1.7.0.5" label="PLG_SYSTEM_RGAAC3RB_FIELD_SITELESSC_LABEL" description="PLG_SYSTEM_RGAAC3RB_FIELD_SITELESSC_DESC" directory="plugins/system/rgaac3rb/lessc" filter="\.php" exclude="" stripext="1" hide_none="1" hide_default="1"/>
         <field name="lessfile" type="text" description="PLG_SYSTEM_RGAAC3RB_FIELD_LESSFILE_DESC" label="PLG_SYSTEM_RGAAC3RB_FIELD_LESSFILE_LABEL" default="css/less/mix.template.less" size="37"/>
         <field name="cssfile" type="text" description="PLG_SYSTEM_RGAAC3RB_FIELD_CSSFILE_DESC" label="PLG_SYSTEM_RGAAC3RB_FIELD_CSSFILE_LABEL" default="css/template.min.css" size="37"/>
         <field type="spacer" name="adminspacer" class="text" label="PLG_SYSTEM_RGAAC3RB_ADMINSPACER"/>
-        <field name="adminlessc" type="filelist" default="lessphp-1.7.0.3" label="PLG_SYSTEM_RGAAC3RB_FIELD_ADMINLESSC_LABEL" description="PLG_SYSTEM_RGAAC3RB_FIELD_ADMINLESSC_DESC" directory="plugins/system/rgaac3rb/lessc" filter="\.php" exclude="" stripext="1" hide_none="1" hide_default="1" />
+        <field name="adminlessc" type="filelist" default="lessphp-1.7.0.5" label="PLG_SYSTEM_RGAAC3RB_FIELD_ADMINLESSC_LABEL" description="PLG_SYSTEM_RGAAC3RB_FIELD_ADMINLESSC_DESC" directory="plugins/system/rgaac3rb/lessc" filter="\.php" exclude="" stripext="1" hide_none="1" hide_default="1" />
         <field name="admin_lessfile" type="text" description="PLG_SYSTEM_RGAAC3RB_FIELD_ADMINLESSFILE_DESC" label="PLG_SYSTEM_RGAAC3RB_FIELD_ADMINLESSFILE_LABEL" default="css/less/mix.template.less" size="37"/>
         <field name="admin_cssfile" type="text" description="PLG_SYSTEM_RGAAC3RB_FIELD_ADMINCSSFILE_DESC" label="PLG_SYSTEM_RGAAC3RB_FIELD_ADMINCSSFILE_LABEL" default="css/template.min.css" size="37" />
         <field type="spacer" name="lessspacer" class="text" label="PLG_SYSTEM_RGAAC3RB_LESSSPACER" />
