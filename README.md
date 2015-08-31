@@ -8,7 +8,7 @@ Plugin système pour le template c3rbrgaa.
 #### Fonctionnalités Bootstrap : *Actif par défaut*
 Le plugin remplace la librairie de joomla 3 JHtmlBootstrap basée sur la version 2 du bootstrap par la librairie située dans le template [rgaac3rb](https://github.com/c3rb-org/template_RGAA_C3rb) `rgaac3rb\libraries\cms\html\bootstrap.php` adaptée à la version 3 du bootstrap.
 
-#### Fonctionnalités LESS : *Inatif par défaut*
+#### Fonctionnalités LESS : *Inactif par défaut*
 Si l'option est activé et que vos fichiers LESS subissent des modifications, le plugin va recompiler le CSS au premier rafraichissement du site.
 Il va également mettre en cache les fichiers générés et recompilera uniquement le CSS si les fichiers LESS subissent une modification.
 
