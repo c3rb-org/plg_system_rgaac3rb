@@ -86,9 +86,17 @@ class plgSystemRgaac3rb extends JPlugin
 				}
 				catch (Exception $e)
 				{
+<<<<<<< HEAD
 					//echo "lessphp error: " . $e->getMessage();
 					$this->app->enqueueMessage();
 				}
+=======
+					if(JDEBUG) {
+						$this->app->enqueueMessage($e->getMessage());
+					}
+				}
+
+>>>>>>> master
 			}
 		}
 
@@ -159,6 +167,7 @@ class plgSystemRgaac3rb extends JPlugin
 			$formatter->indentChar = "\t";
 		}
 
+<<<<<<< HEAD
 		if((boolean) $this->params->get('less_template', 0)) {
 			$lessVarParams = $this->parseTemplateParams();
 			if(!empty($lessVarParams)) {
@@ -183,12 +192,19 @@ class plgSystemRgaac3rb extends JPlugin
 		$newCache = $less->cachedCompile($cache, $force);
 
 		if(!is_array($cache) || $newCache["updated"] > $cache["updated"])
+=======
+		//compile cache file
+		$newCache = $less->cachedCompile($cache, $force);
+
+		if (!is_array($cache) || $newCache["updated"] > $cache["updated"])
+>>>>>>> master
 		{
 			file_put_contents($cacheFile, serialize($newCache));
 			file_put_contents($outputFile, $newCache['compiled']);
 		}
 	}
 
+<<<<<<< HEAD
 	function parseTemplateParams()
 	{
 		$tpl = $this->app->getTemplate(true);
@@ -205,6 +221,8 @@ class plgSystemRgaac3rb extends JPlugin
 		return $params;
 	}
 
+=======
+>>>>>>> master
 	/**
 	 * Configure and add Client-side Less library
 	 * @author   piotr-cz
