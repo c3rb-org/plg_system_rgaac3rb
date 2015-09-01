@@ -9,7 +9,7 @@ class plgSystemRgaac3rb extends JPlugin
 	protected $app;
 
 	function plgSystemRgaac3rb(&$subject, $config)
-	{		
+	{
 		parent::__construct($subject, $config);
 
 		$this->app = JFactory::getApplication();
@@ -86,10 +86,11 @@ class plgSystemRgaac3rb extends JPlugin
 				}
 				catch (Exception $e)
 				{
-					//echo "lessphp error: " . $e->getMessage();
-					$this->app->enqueueMessage();
+					if(JDEBUG) {
+						$this->app->enqueueMessage($e->getMessage());
+					}
 				}
-				
+
 			}
 		}
 
