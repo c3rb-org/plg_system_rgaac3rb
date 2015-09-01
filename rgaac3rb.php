@@ -86,11 +86,17 @@ class plgSystemRgaac3rb extends JPlugin
 				}
 				catch (Exception $e)
 				{
+<<<<<<< HEAD
+					//echo "lessphp error: " . $e->getMessage();
+					$this->app->enqueueMessage();
+				}
+=======
 					if(JDEBUG) {
 						$this->app->enqueueMessage($e->getMessage());
 					}
 				}
 
+>>>>>>> master
 			}
 		}
 
@@ -161,16 +167,62 @@ class plgSystemRgaac3rb extends JPlugin
 			$formatter->indentChar = "\t";
 		}
 
+<<<<<<< HEAD
+		if((boolean) $this->params->get('less_template', 0)) {
+			$lessVarParams = $this->parseTemplateParams();
+			if(!empty($lessVarParams)) {
+				$cacheLessVar = $tmpPath . DIRECTORY_SEPARATOR . $this->app->getTemplate() . "_less_var.cache";
+
+				if(file_exists($cacheLessVar)) {
+					$oldLessVar = unserialize(file_get_contents($cacheLessVar));
+				}else {
+					$oldLessVar = array();
+				}
+
+				if($lessVarParams !== $oldLessVar) {
+					file_put_contents($cacheLessVar, serialize($lessVarParams));
+					$cache = $inputFile; //unlink($cacheFile);
+				}
+
+				$less->setVariables($lessVarParams);
+			}
+		}
+
+		//compile cache file
+		$newCache = $less->cachedCompile($cache, $force);
+
+		if(!is_array($cache) || $newCache["updated"] > $cache["updated"])
+=======
 		//compile cache file
 		$newCache = $less->cachedCompile($cache, $force);
 
 		if (!is_array($cache) || $newCache["updated"] > $cache["updated"])
+>>>>>>> master
 		{
 			file_put_contents($cacheFile, serialize($newCache));
 			file_put_contents($outputFile, $newCache['compiled']);
 		}
 	}
 
+<<<<<<< HEAD
+	function parseTemplateParams()
+	{
+		$tpl = $this->app->getTemplate(true);
+		$tplParams = $tpl->params;
+		$params = array();
+		$pattern = 'lessvar_';
+
+		foreach($tplParams->getIterator() as $name => $value) {
+			if(strpos($name, $pattern) !== false) {
+				$params[str_replace($pattern, '', strstr($name, $pattern))] = $value;
+			}
+		}
+
+		return $params;
+	}
+
+=======
+>>>>>>> master
 	/**
 	 * Configure and add Client-side Less library
 	 * @author   piotr-cz

@@ -53,7 +53,7 @@ class Less_Parser{
 	 */
 	private $env;
 
-	private $rules = array();
+	protected $rules = array();
 
 	private static $imports = array();
 
@@ -285,7 +285,7 @@ class Less_Parser{
 			$filename = 'anonymous-file-'.Less_Parser::$next_id++.'.less';
 		}else{
 			$file_uri = self::WinPath($file_uri);
-			$filename = basename($file_uri);
+			$filename = $file_uri;
 			$uri_root = dirname($file_uri);
 		}
 
@@ -2972,7 +2972,6 @@ class Less_Functions{
 		$this->currentFileInfo = $currentFileInfo;
 	}
 
-
 	/**
 	 * @param string $op
 	 */
@@ -3021,11 +3020,14 @@ class Less_Functions{
 		}
 	}
 
-	public function rgb ($r, $g, $b){
+	public function rgb ($r = null, $g = null, $b = null){
+		if (is_null($r) || is_null($g) || is_null($b)) {
+			throw new Less_Exception_Compiler("rgb expects three parameters");
+		}
 		return $this->rgba($r, $g, $b, 1.0);
 	}
 
-	public function rgba($r, $g, $b, $a){
+	public function rgba($r = null, $g = null, $b = null, $a = null){
 		$rgb = array($r, $g, $b);
 		$rgb = array_map(array('Less_Functions','scaled'),$rgb);
 
@@ -3099,59 +3101,107 @@ class Less_Functions{
 						 $a);
 	}
 
-	public function hue($color){
+	public function hue($color = null){
+		if (!$color instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The first argument to hue must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+
 		$c = $color->toHSL();
 		return new Less_Tree_Dimension(Less_Parser::round($c['h']));
 	}
 
-	public function saturation($color){
+	public function saturation($color = null){
+		if (!$color instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The first argument to saturation must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+
 		$c = $color->toHSL();
 		return new Less_Tree_Dimension(Less_Parser::round($c['s'] * 100), '%');
 	}
 
-	public function lightness($color){
+	public function lightness($color = null){
+		if (!$color instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The first argument to lightness must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+
 		$c = $color->toHSL();
 		return new Less_Tree_Dimension(Less_Parser::round($c['l'] * 100), '%');
 	}
 
-	public function hsvhue( $color ){
+	public function hsvhue( $color = null ){
+		if (!$color instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The first argument to hsvhue must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+
 		$hsv = $color->toHSV();
 		return new Less_Tree_Dimension( Less_Parser::round($hsv['h']) );
 	}
 
 
-	public function hsvsaturation( $color ){
+	public function hsvsaturation( $color = null ){
+		if (!$color instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The first argument to hsvsaturation must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+
 		$hsv = $color->toHSV();
 		return new Less_Tree_Dimension( Less_Parser::round($hsv['s'] * 100), '%' );
 	}
 
-	public function hsvvalue( $color ){
+	public function hsvvalue( $color = null ){
+		if (!$color instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The first argument to hsvvalue must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+
 		$hsv = $color->toHSV();
 		return new Less_Tree_Dimension( Less_Parser::round($hsv['v'] * 100), '%' );
 	}
 
-	public function red($color) {
+	public function red($color = null) {
+		if (!$color instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The first argument to red must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+
 		return new Less_Tree_Dimension( $color->rgb[0] );
 	}
 
-	public function green($color) {
+	public function green($color = null) {
+		if (!$color instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The first argument to green must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+
 		return new Less_Tree_Dimension( $color->rgb[1] );
 	}
 
-	public function blue($color) {
+	public function blue($color = null) {
+		if (!$color instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The first argument to blue must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+
 		return new Less_Tree_Dimension( $color->rgb[2] );
 	}
 
-	public function alpha($color){
+	public function alpha($color = null){
+		if (!$color instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The first argument to alpha must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+
 		$c = $color->toHSL();
 		return new Less_Tree_Dimension($c['a']);
 	}
 
-	public function luma ($color) {
+	public function luma ($color = null) {
+		if (!$color instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The first argument to luma must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+
 		return new Less_Tree_Dimension(Less_Parser::round( $color->luma() * $color->alpha * 100), '%');
 	}
 
-	public function luminance( $color ){
+	public function luminance( $color = null ){
+		if (!$color instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The first argument to luminance must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+
 		$luminance =
 			(0.2126 * $color->rgb[0] / 255)
 		  + (0.7152 * $color->rgb[1] / 255)
@@ -3160,12 +3210,20 @@ class Less_Functions{
 		return new Less_Tree_Dimension(Less_Parser::round( $luminance * $color->alpha * 100), '%');
 	}
 
-	public function saturate($color, $amount = null){
+	public function saturate($color = null, $amount = null){
 		// filter: saturate(3.2);
 		// should be kept as is, so check for color
-		if( !property_exists($color,'rgb') ){
+		if ($color instanceof Less_Tree_Dimension) {
 			return null;
 		}
+
+		if (!$color instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The first argument to saturate must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+		if (!$amount instanceof Less_Tree_Dimension) {
+			throw new Less_Exception_Compiler('The second argument to saturate must be a percentage' . ($amount instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+
 		$hsl = $color->toHSL();
 
 		$hsl['s'] += $amount->value / 100;
@@ -3177,7 +3235,14 @@ class Less_Functions{
 	/**
 	 * @param Less_Tree_Dimension $amount
 	 */
-	public function desaturate($color, $amount){
+	public function desaturate($color = null, $amount = null){
+		if (!$color instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The first argument to desaturate must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+		if (!$amount instanceof Less_Tree_Dimension) {
+			throw new Less_Exception_Compiler('The second argument to desaturate must be a percentage' . ($amount instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+
 		$hsl = $color->toHSL();
 
 		$hsl['s'] -= $amount->value / 100;
@@ -3188,7 +3253,14 @@ class Less_Functions{
 
 
 
-	public function lighten($color, $amount){
+	public function lighten($color = null, $amount=null){
+		if (!$color instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The first argument to lighten must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+		if (!$amount instanceof Less_Tree_Dimension) {
+			throw new Less_Exception_Compiler('The second argument to lighten must be a percentage' . ($amount instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+
 		$hsl = $color->toHSL();
 
 		$hsl['l'] += $amount->value / 100;
@@ -3197,34 +3269,57 @@ class Less_Functions{
 		return $this->hsla($hsl['h'], $hsl['s'], $hsl['l'], $hsl['a']);
 	}
 
-	public function darken($color, $amount){
-
-		if( $color instanceof Less_Tree_Color ){
-			$hsl = $color->toHSL();
-			$hsl['l'] -= $amount->value / 100;
-			$hsl['l'] = self::clamp($hsl['l']);
-
-			return $this->hsla($hsl['h'], $hsl['s'], $hsl['l'], $hsl['a']);
+	public function darken($color = null, $amount = null){
+		if (!$color instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The first argument to darken must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+		if (!$amount instanceof Less_Tree_Dimension) {
+			throw new Less_Exception_Compiler('The second argument to darken must be a percentage' . ($amount instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
 		}
 
-		Less_Functions::Expected('color',$color);
+		$hsl = $color->toHSL();
+		$hsl['l'] -= $amount->value / 100;
+		$hsl['l'] = self::clamp($hsl['l']);
+
+		return $this->hsla($hsl['h'], $hsl['s'], $hsl['l'], $hsl['a']);
 	}
 
-	public function fadein($color, $amount){
+	public function fadein($color = null, $amount = null){
+		if (!$color instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The first argument to fadein must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+		if (!$amount instanceof Less_Tree_Dimension) {
+			throw new Less_Exception_Compiler('The second argument to fadein must be a percentage' . ($amount instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+
 		$hsl = $color->toHSL();
 		$hsl['a'] += $amount->value / 100;
 		$hsl['a'] = self::clamp($hsl['a']);
 		return $this->hsla($hsl['h'], $hsl['s'], $hsl['l'], $hsl['a']);
 	}
 
-	public function fadeout($color, $amount){
+	public function fadeout($color = null, $amount = null){
+		if (!$color instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The first argument to fadeout must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+		if (!$amount instanceof Less_Tree_Dimension) {
+			throw new Less_Exception_Compiler('The second argument to fadeout must be a percentage' . ($amount instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+
 		$hsl = $color->toHSL();
 		$hsl['a'] -= $amount->value / 100;
 		$hsl['a'] = self::clamp($hsl['a']);
 		return $this->hsla($hsl['h'], $hsl['s'], $hsl['l'], $hsl['a']);
 	}
 
-	public function fade($color, $amount){
+	public function fade($color = null, $amount = null){
+		if (!$color instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The first argument to fade must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+		if (!$amount instanceof Less_Tree_Dimension) {
+			throw new Less_Exception_Compiler('The second argument to fade must be a percentage' . ($amount instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+
 		$hsl = $color->toHSL();
 
 		$hsl['a'] = $amount->value / 100;
@@ -3234,7 +3329,14 @@ class Less_Functions{
 
 
 
-	public function spin($color, $amount){
+	public function spin($color = null, $amount = null){
+		if (!$color instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The first argument to spin must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+		if (!$amount instanceof Less_Tree_Dimension) {
+			throw new Less_Exception_Compiler('The second argument to spin must be a number' . ($amount instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+
 		$hsl = $color->toHSL();
 		$hue = fmod($hsl['h'] + $amount->value, 360);
 
@@ -3251,9 +3353,18 @@ class Less_Functions{
 	/**
 	 * @param Less_Tree_Color $color1
 	 */
-	public function mix($color1, $color2, $weight = null){
+	public function mix($color1 = null, $color2 = null, $weight = null){
+		if (!$color1 instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The first argument to mix must be a color' . ($color1 instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+		if (!$color2 instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The second argument to mix must be a color' . ($color2 instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
 		if (!$weight) {
 			$weight = new Less_Tree_Dimension('50', '%');
+		}
+		if (!$weight instanceof Less_Tree_Dimension) {
+			throw new Less_Exception_Compiler('The third argument to contrast must be a percentage' . ($weight instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
 		}
 
 		$p = $weight->value / 100.0;
@@ -3275,14 +3386,14 @@ class Less_Functions{
 	}
 
 	public function greyscale($color){
-		return $this->desaturate($color, new Less_Tree_Dimension(100));
+		return $this->desaturate($color, new Less_Tree_Dimension(100,'%'));
 	}
 
 
 	public function contrast( $color, $dark = null, $light = null, $threshold = null){
 		// filter: contrast(3.2);
 		// should be kept as is, so check for color
-		if( !property_exists($color,'rgb') ){
+		if (!$color instanceof Less_Tree_Color) {
 			return null;
 		}
 		if( !$light ){
@@ -3291,6 +3402,14 @@ class Less_Functions{
 		if( !$dark ){
 			$dark = $this->rgba(0, 0, 0, 1.0);
 		}
+
+		if (!$dark instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The second argument to contrast must be a color' . ($dark instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+		if (!$light instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The third argument to contrast must be a color' . ($light instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+
 		//Figure out which is actually light and dark!
 		if( $dark->luma() > $light->luma() ){
 			$t = $light;
@@ -3540,7 +3659,7 @@ class Less_Functions{
 
 			if( $order[$j]->unit->toString() === "" && $unitClone ){
 				$temp = new Less_Tree_Dimension( $order[$j]->value, $unitClone);
-				$referenceUnified = $temp->unifiy();
+				$referenceUnified = $temp->unify();
 			}else{
 				$referenceUnified = $order[$j]->unify();
 			}
@@ -3574,6 +3693,10 @@ class Less_Functions{
 	}
 
 	public function argb($color) {
+		if (!$color instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The first argument to argb must be a color' . ($dark instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+
 		return new Less_Tree_Anonymous($color->toARGB());
 	}
 
@@ -3831,21 +3954,6 @@ class Less_Functions{
 
 
 	/**
-	 * @param string $type
-	 */
-	private static function Expected( $type, $arg ){
-
-		$debug = debug_backtrace();
-		array_shift($debug);
-		$last = array_shift($debug);
-		$last = array_intersect_key($last,array('function'=>'','class'=>'','line'=>''));
-
-		$message = 'Object of type '.get_class($arg).' passed to darken function. Expecting `'.$type.'`. '.$arg->toCSS().'. '.print_r($last,true);
-		throw new Less_Exception_Compiler($message);
-
-	}
-
-	/**
 	 * Php version of javascript's `encodeURIComponent` function
 	 *
 	 * @param string $string The string to encode
@@ -3879,7 +3987,14 @@ class Less_Functions{
 		return new Less_Tree_Color($r, $ar);
 	}
 
-	public function multiply($color1, $color2 ){
+	public function multiply($color1 = null, $color2 = null ){
+		if (!$color1 instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The first argument to multiply must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+		if (!$color2 instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The second argument to multiply must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+
 		return $this->colorBlend( array($this,'colorBlendMultiply'),  $color1, $color2 );
 	}
 
@@ -3887,7 +4002,14 @@ class Less_Functions{
 		return $cb * $cs;
 	}
 
-	public function screen($color1, $color2 ){
+	public function screen($color1 = null, $color2 = null ){
+		if (!$color1 instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The first argument to screen must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+		if (!$color2 instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The second argument to screen must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+
 		return $this->colorBlend( array($this,'colorBlendScreen'),  $color1, $color2 );
 	}
 
@@ -3895,7 +4017,14 @@ class Less_Functions{
 		return $cb + $cs - $cb * $cs;
 	}
 
-	public function overlay($color1, $color2){
+	public function overlay($color1 = null, $color2 = null){
+		if (!$color1 instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The first argument to overlay must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+		if (!$color2 instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The second argument to overlay must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+
 		return $this->colorBlend( array($this,'colorBlendOverlay'),  $color1, $color2 );
 	}
 
@@ -3906,7 +4035,14 @@ class Less_Functions{
 			: $this->colorBlendScreen($cb - 1, $cs);
 	}
 
-	public function softlight($color1, $color2){
+	public function softlight($color1 = null, $color2 = null){
+		if (!$color1 instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The first argument to softlight must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+		if (!$color2 instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The second argument to softlight must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+
 		return $this->colorBlend( array($this,'colorBlendSoftlight'),  $color1, $color2 );
 	}
 
@@ -3921,7 +4057,14 @@ class Less_Functions{
 		return $cb - (1 - 2 * $cs) * $e * ($d - $cb);
 	}
 
-	public function hardlight($color1, $color2){
+	public function hardlight($color1 = null, $color2 = null){
+		if (!$color1 instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The first argument to hardlight must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+		if (!$color2 instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The second argument to hardlight must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+
 		return $this->colorBlend( array($this,'colorBlendHardlight'),  $color1, $color2 );
 	}
 
@@ -3929,7 +4072,14 @@ class Less_Functions{
 		return $this->colorBlendOverlay($cs, $cb);
 	}
 
-	public function difference($color1, $color2) {
+	public function difference($color1 = null, $color2 = null) {
+		if (!$color1 instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The first argument to difference must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+		if (!$color2 instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The second argument to difference must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+
 		return $this->colorBlend( array($this,'colorBlendDifference'),  $color1, $color2 );
 	}
 
@@ -3937,7 +4087,14 @@ class Less_Functions{
 		return abs($cb - $cs);
 	}
 
-	public function exclusion( $color1, $color2 ){
+	public function exclusion( $color1 = null, $color2 = null ){
+		if (!$color1 instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The first argument to exclusion must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+		if (!$color2 instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The second argument to exclusion must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+
 		return $this->colorBlend( array($this,'colorBlendExclusion'),  $color1, $color2 );
 	}
 
@@ -3945,7 +4102,14 @@ class Less_Functions{
 		return $cb + $cs - 2 * $cb * $cs;
 	}
 
-	public function average($color1, $color2){
+	public function average($color1 = null, $color2 = null){
+		if (!$color1 instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The first argument to average must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+		if (!$color2 instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The second argument to average must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+
 		return $this->colorBlend( array($this,'colorBlendAverage'),  $color1, $color2 );
 	}
 
@@ -3954,7 +4118,14 @@ class Less_Functions{
 		return ($cb + $cs) / 2;
 	}
 
-	public function negation($color1, $color2 ){
+	public function negation($color1 = null, $color2 = null ){
+		if (!$color1 instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The first argument to negation must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+		if (!$color2 instanceof Less_Tree_Color) {
+			throw new Less_Exception_Compiler('The second argument to negation must be a color' . ($color instanceof Less_Tree_Expression ? ' (did you forgot commas?)' : '') );
+		}
+
 		return $this->colorBlend( array($this,'colorBlendNegation'),  $color1, $color2 );
 	}
 
@@ -5865,6 +6036,14 @@ class Less_Tree_Import extends Less_Tree{
 						return array( $full_path, $uri );
 					}
 				}elseif( !empty($rootpath) ){
+
+
+					if( $rooturi ){
+						if( strpos($evald_path,$rooturi) === 0 ){
+							$evald_path = substr( $evald_path, strlen($rooturi) );
+						}
+					}
+
 					$path = rtrim($rootpath,'/\\').'/'.ltrim($evald_path,'/\\');
 
 					if( file_exists($path) ){
@@ -9366,7 +9545,7 @@ class Less_Exception_Parser extends Exception{
 
 	protected function getInput(){
 
-		if( !$this->input && $this->currentFile && $this->currentFile['filename'] ){
+		if( !$this->input && $this->currentFile && $this->currentFile['filename'] && file_exists($this->currentFile['filename']) ){
 			$this->input = file_get_contents( $this->currentFile['filename'] );
 		}
 	}
@@ -10049,13 +10228,9 @@ class Less_SourceMap_Generator extends Less_Configurable {
 		$this->encoder = new Less_SourceMap_Base64VLQ();
 
 		$this->SetOptions($options);
-
-
-		// fix windows paths
-		if( !empty($this->options['sourceMapRootpath']) ){
-			$this->options['sourceMapRootpath'] = str_replace('\\', '/', $this->options['sourceMapRootpath']);
-			$this->options['sourceMapRootpath'] = rtrim($this->options['sourceMapRootpath'],'/').'/';
-		}
+		
+		$this->options['sourceMapRootpath'] = $this->fixWindowsPath($this->options['sourceMapRootpath'], true);
+		$this->options['sourceMapBasepath'] = $this->fixWindowsPath($this->options['sourceMapBasepath'], true);
 	}
 
 	/**
@@ -10125,7 +10300,8 @@ class Less_SourceMap_Generator extends Less_Configurable {
 	 */
 	protected function normalizeFilename($filename){
 
-		$filename = str_replace('\\', '/', $filename);
+		$filename = $this->fixWindowsPath($filename);
+
 		$rootpath = $this->getOption('sourceMapRootpath');
 		$basePath = $this->getOption('sourceMapBasepath');
 
@@ -10306,6 +10482,21 @@ class Less_SourceMap_Generator extends Less_Configurable {
 	 */
 	protected function findFileIndex($filename){
 		return $this->source_keys[$filename];
+	}
+
+	/**
+	 * fix windows paths
+	 * @param  string $path
+	 * @return string      
+	 */
+	public function fixWindowsPath($path, $addEndSlash = false){
+		$slash = ($addEndSlash) ? '/' : '';
+		if( !empty($path) ){
+			$path = str_replace('\\', '/', $path);
+			$path = rtrim($path,'/') . $slash;
+		}
+
+		return $path;
 	}
 
 } 
