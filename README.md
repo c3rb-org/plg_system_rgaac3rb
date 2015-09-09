@@ -17,6 +17,6 @@ Une option est disponible pour prendre en compte des valeurs de variables less d
 <field name="*_lessvar_{nom-variable-less}" type="color|text|list|.." default="#000000" description="xxx" label="xxx" />
 ```
 
-> :exclamation: Le plugin va modifier les chemins des images, polices, etc par rapport au dossier où sera enregistré le fichier CSS et non par rapport au fichier LESS. :exclamation:
+> Le plugin va modifier les chemins des images, polices, etc par rapport au dossier où sera enregistré le fichier CSS et non par rapport au fichier LESS.
 
 **Attention :** Le template [rgaa_c3rb](https://github.com/c3rb-org/template_RGAA_C3rb) utilise [Bootstrap 3](https://github.com/twbs/bootstrap) et non Bootstrap 2 prévut par [Joomla! 3](https://github.com/joomla/joomla-cms/). Vous devrez donc veiller à utiliser le compilateur `lessphp-1.7.0.5`.
