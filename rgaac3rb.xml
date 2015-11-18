@@ -6,7 +6,7 @@
   <authorEmail>orphee@c3rb.fr</authorEmail>
   <authorUrl>www.c3rb.org</authorUrl>
   <copyright>Copyright (C) 2015 C3RB Informatique. All rights reserved.</copyright>
-  <version>1.0.0.0</version>
+  <version>1.1.0</version>
   <description>PLG_SYSTEM_RGAAC3RB_XML_DESC</description>
   <files>
     <filename plugin="rgaac3rb">rgaac3rb.php</filename>

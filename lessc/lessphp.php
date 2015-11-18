@@ -18,7 +18,7 @@ if (!class_exists('Less_Parser')) {
 */
 
 if (!class_exists('Less_Parser')) {
-  require_once dirname(__FILE__) . '/less.php/Less.php';
+  require_once dirname(dirname(__FILE__)) . '/vendor/oyejorge/less.php/lessc.inc.php';
 }
 
 /** Joomla System Less Plugin mod -- END */

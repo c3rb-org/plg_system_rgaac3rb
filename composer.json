@@ -1,0 +1,12 @@
+{
+    "name": "c3rb/plugin_system_rgaac3rb",
+    "authors": [
+        {
+            "name": "C3rb Informatique",
+            "email": "contact@c3rb.net"
+        }
+    ],
+    "require": {
+        "oyejorge/less.php": "v1.7.0.9"
+    }
+}
