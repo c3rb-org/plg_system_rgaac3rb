@@ -16,9 +16,9 @@ class plgSystemRgaac3rb extends JPlugin
 
 		$name = false;
 		if ($this->app->isSite()) {
-			$name = $this->params->get('sitelessc', 'lessphp-1.7.0.3');
+			$name = $this->params->get('sitelessc', 'lessphp');
 		}else if ($this->app->isAdmin()) {
-			$name = $this->params->get('adminlessc', 'lessphp-1.7.0.3');
+			$name = $this->params->get('adminlessc', 'lessphp');
 		}
 
 		if ($name && file_exists($file = dirname(__FILE__) . '/lessc/' . $name . '.php')) {
@@ -54,7 +54,7 @@ class plgSystemRgaac3rb extends JPlugin
 
 			//destination .css file, default css/template.css
 			$cssFile = $templatePath . $this->params->get('cssfile', 'css/template.css');
-
+			$cssFileMinified = $templatePath . $this->params->get('cssfileminified', 'css/template.min.css');
 		}
 
 		//execute backend
@@ -82,7 +82,8 @@ class plgSystemRgaac3rb extends JPlugin
 				//initialse less compiler
 				try
 				{
-					$this->autoCompileLess($lessFile, $cssFile);
+					$output = JDEBUG?$cssFile:$cssFileMinified;
+					$this->autoCompileLess($lessFile, $output);
 				}
 				catch (Exception $e)
 				{
@@ -140,13 +141,13 @@ class plgSystemRgaac3rb extends JPlugin
 		$force = (boolean) $this->params->get('less_force', 0);
 
 		//option: preserve comments
-		if ($this->params->get('less_comments', 0))
+		if ($this->params->get('less_comments', 0) || JDEBUG)
 		{
 			$less->setPreserveComments(true);
 		}
 
 		//option: compression
-		if ($this->params->get('less_compress', 0))
+		if ($this->params->get('less_compress', 0) || JDEBUG)
 		{
 			$less->setFormatter("compressed");
 		}
