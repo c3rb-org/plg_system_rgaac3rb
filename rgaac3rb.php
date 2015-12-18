@@ -86,9 +86,7 @@ class plgSystemRgaac3rb extends JPlugin
 				}
 				catch (Exception $e)
 				{
-					if(JDEBUG) {
-						$this->app->enqueueMessage($e->getMessage());
-					}
+					$this->app->enqueueMessage($e->getMessage(), 'error');
 				}
 			}
 		}
