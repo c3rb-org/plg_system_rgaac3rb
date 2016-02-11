@@ -107,7 +107,7 @@ class plgSystemRgaac3rb extends JPlugin
 		// load config file
 		$config = JFactory::getConfig();
 		//path to temp folder
-		$tmpPath = $config->get('tmp_path');
+		$tmpPath = JPATH_CACHE;
 
 		//load chached file
 		$cacheFile = $tmpPath . DIRECTORY_SEPARATOR . $this->app->getTemplate() . "_" . basename($inputFile) . ".cache";
