@@ -63,4 +63,7 @@
       </fieldset>
     </fields>
   </config>
+  <updateservers>
+    <server type="extension" priority="1" name="System - Template C3rb RGAA">http://update.c3rb.org/joomla3/plg_system_rgaac3rb.xml</server>
+  </updateservers>
 </extension>
