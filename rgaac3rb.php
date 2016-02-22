@@ -8,9 +8,9 @@ class plgSystemRgaac3rb extends JPlugin
 	 */
 	protected $app;
 
-	function plgSystemRgaac3rb(&$subject, $config)
+	public function __construct(& $subject, $params)
 	{
-		parent::__construct($subject, $config);
+		parent::__construct($subject, $params);
 
 		$this->app = JFactory::getApplication();
 
