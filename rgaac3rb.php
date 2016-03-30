@@ -28,7 +28,19 @@ class plgSystemRgaac3rb extends JPlugin
 
 	function onAfterInitialise()
 	{
-		JLoader::register('JHtmlBootstrap', JPATH_THEMES.DIRECTORY_SEPARATOR.'c3rb_rgaa'.DIRECTORY_SEPARATOR.'libraries'.DIRECTORY_SEPARATOR.'cms'.DIRECTORY_SEPARATOR.'html'.DIRECTORY_SEPARATOR.'bootstrap.php', true);
+		$baseLibPath = JPATH_THEMES.DIRECTORY_SEPARATOR.'c3rb_rgaa'.DIRECTORY_SEPARATOR.'libraries'.DIRECTORY_SEPARATOR.'cms'.DIRECTORY_SEPARATOR.'html'.DIRECTORY_SEPARATOR;
+
+		if(file_exists($baseLibPath.'bootstrap.php')) {
+			JLoader::register('JHtmlBootstrap', $baseLibPath.'bootstrap.php', true);
+		}
+
+		if(file_exists($baseLibPath.'actionsdropdown.php')) {
+			JLoader::register('JHtmlActionsdropdown', $baseLibPath.'actionsdropdown.php', true);
+		}
+
+		if(file_exists($baseLibPath.'jgrid.php')) {
+			JLoader::register('JHtmlGrid', $baseLibPath.'jgrid.php', true);
+		}
 	}
 
 	/**
