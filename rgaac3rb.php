@@ -1,8 +1,10 @@
 <?php
+
 defined('_JEXEC') or die;
 
 class plgSystemRgaac3rb extends JPlugin
 {
+
 	/**
 	 * @var $app
 	 */
@@ -15,14 +17,63 @@ class plgSystemRgaac3rb extends JPlugin
 		$this->app = JFactory::getApplication();
 
 		$name = false;
-		if ($this->app->isSite()) {
+		if ($this->app->isSite())
+		{
 			$name = $this->params->get('sitelessc', 'lessphp-1.7.0.3');
-		}else if ($this->app->isAdmin()) {
+		}
+		else if ($this->app->isAdmin())
+		{
 			$name = $this->params->get('adminlessc', 'lessphp-1.7.0.3');
 		}
 
-		if ($name && file_exists($file = dirname(__FILE__) . '/lessc/' . $name . '.php')) {
+		if ($name && file_exists($file = dirname(__FILE__) . '/lessc/' . $name . '.php'))
+		{
 			require_once $file;
+		}
+	}
+
+	public function onAfterRoute()
+	{
+		$app = JFactory::getApplication();
+
+		if ($app->isAdmin())
+		{
+			$user = JFactory::getUser();
+
+			if (!in_array(8, $user->groups))
+			{
+				return false;
+			}
+
+			$inputs = JFactory::getApplication()->input;
+			$option = $inputs->getString('option', null);
+			$id = $inputs->getInt('id', 0);
+			$rgaatask = $inputs->getString('rgaatask', null);
+
+			if (strtolower($option) == 'com_templates' && $id && $rgaatask == "export")
+			{
+				$db = JFactory::getDbo();
+				$query = $db->getQuery(true);
+
+				$query
+					->select('*')
+					->from($db->quoteName('#__template_styles'))
+					->where($db->quoteName('id') . ' = ' . $db->quote($id) . ' AND ' . $db->quoteName('client_id') . ' = 0');
+
+				$result = $db->setQuery($query)->loadObject();
+
+				header('Content-Description: File Transfer');
+				header('Content-type: application/txt');
+				header('Content-Disposition: attachment; filename="' . $result->template . '_settings_' . date('d-m-Y') . '.json"');
+				header('Content-Transfer-Encoding: binary');
+				header('Expires: 0');
+				header('Cache-Control: must-revalidate');
+				header('Pragma: public');
+
+				echo $result->params;
+
+				exit;
+			}
 		}
 	}
 
@@ -66,7 +117,6 @@ class plgSystemRgaac3rb extends JPlugin
 
 			//destination .css file, default css/template.css
 			$cssFile = $templatePath . $this->params->get('cssfile', 'css/template.css');
-
 		}
 
 		//execute backend
@@ -79,7 +129,6 @@ class plgSystemRgaac3rb extends JPlugin
 
 			//destination .css file, default css/template.css
 			$cssFile = $templatePath . $this->params->get('admin_cssfile', 'css/template.css');
-
 		}
 
 		//check if .less file exists and is readable
@@ -170,18 +219,24 @@ class plgSystemRgaac3rb extends JPlugin
 			$formatter->indentChar = "\t";
 		}
 
-		if((boolean) $this->params->get('less_template', 0)) {
+		if ((boolean) $this->params->get('less_template', 0))
+		{
 			$lessVarParams = $this->parseTemplateParams();
-			if(!empty($lessVarParams)) {
+			if (!empty($lessVarParams))
+			{
 				$cacheLessVar = $tmpPath . DIRECTORY_SEPARATOR . $this->app->getTemplate() . "_less_var.cache";
 
-				if(file_exists($cacheLessVar)) {
+				if (file_exists($cacheLessVar))
+				{
 					$oldLessVar = unserialize(file_get_contents($cacheLessVar));
-				}else {
+				}
+				else
+				{
 					$oldLessVar = array();
 				}
 
-				if($lessVarParams !== $oldLessVar) {
+				if ($lessVarParams !== $oldLessVar)
+				{
 					file_put_contents($cacheLessVar, serialize($lessVarParams));
 					$cache = $inputFile; //unlink($cacheFile);
 				}
@@ -193,7 +248,7 @@ class plgSystemRgaac3rb extends JPlugin
 		//compile cache file
 		$newCache = $less->cachedCompile($cache, $force);
 
-		if(!is_array($cache) || $newCache["updated"] > $cache["updated"])
+		if (!is_array($cache) || $newCache["updated"] > $cache["updated"])
 		{
 			file_put_contents($cacheFile, serialize($newCache));
 			file_put_contents($outputFile, $newCache['compiled']);
@@ -207,8 +262,10 @@ class plgSystemRgaac3rb extends JPlugin
 		$params = array();
 		$pattern = 'lessvar_';
 
-		foreach($tplParams->getIterator() as $name => $value) {
-			if(strpos($name, $pattern) !== false) {
+		foreach ($tplParams->getIterator() as $name => $value)
+		{
+			if (strpos($name, $pattern) !== false)
+			{
 				$params[str_replace($pattern, '', strstr($name, $pattern))] = $value;
 			}
 		}
@@ -269,8 +326,8 @@ class plgSystemRgaac3rb extends JPlugin
 		 *  rootpath		: $templateUrl
 		 */
 		$options = array(
-			'env' => 'development',
-			'dumpLineNumbers' => 'mediaquery', // default: 'comments'
+		    'env' => 'development',
+		    'dumpLineNumbers' => 'mediaquery', // default: 'comments'
 		);
 
 		$doc->addScriptDeclaration('
@@ -296,11 +353,11 @@ class plgSystemRgaac3rb extends JPlugin
 
 			// Load after options (experimental, cannot use in XHTML documents)
 			/*
-				$doc->addScriptDeclaration('
-						// Less library
-						document.write( unescape( \'%3Cscript src="' . $mediaUri . basename($lessVersions[0]) . '" type="text/javascript"%3E%3C/script%3E\' ) );
-				');
-			*/
+			  $doc->addScriptDeclaration('
+			  // Less library
+			  document.write( unescape( \'%3Cscript src="' . $mediaUri . basename($lessVersions[0]) . '" type="text/javascript"%3E%3C/script%3E\' ) );
+			  ');
+			 */
 		}
 		// Cannot find client-side parser
 		else
@@ -316,10 +373,10 @@ class plgSystemRgaac3rb extends JPlugin
 		 * Note:  Cannot rely on removing stylesheet using JDocumentHTML methods.
 		 * Note:  Passes ignore cache trick (template.css?1234567890123)
 		 * Note:  Template.css may be added to $doc['stylesheets'] using following keys:
-		 *	- relative						: `templates/...`
-		 *	- semi		JUri::base(true)	: `/[path-to-root]/templates/...`
+		 * 	- relative						: `templates/...`
+		 * 	- semi		JUri::base(true)	: `/[path-to-root]/templates/...`
 		 * 	- absolute 	JUri::base()		: `http://[host]/[path-to-root]/templates/...`
-		 *	- or outside $doc->_styleSheets
+		 * 	- or outside $doc->_styleSheets
 		 */
 		$lookups = array($cssUri, JUri::base(true) . '/' . $cssUri, JUri::base() . $cssUri);
 
@@ -361,7 +418,7 @@ class plgSystemRgaac3rb extends JPlugin
 		$cssUri = $templateUri . $this->params->get('cssfile', 'css/template.css');
 
 		// Replace line with link element and path to stylesheet file
-		$replaced = preg_replace( '~(\s*?<link.* href=".*?' . preg_quote($cssUri) . '(?:\?.*)?".*/>)~', '', $body, -1, $count);
+		$replaced = preg_replace('~(\s*?<link.* href=".*?' . preg_quote($cssUri) . '(?:\?.*)?".*/>)~', '', $body, -1, $count);
 
 		if ($count)
 		{
@@ -370,5 +427,6 @@ class plgSystemRgaac3rb extends JPlugin
 
 		return;
 	}
+
 }
 ?>
