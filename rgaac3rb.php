@@ -48,7 +48,7 @@ class plgSystemRgaac3rb extends JPlugin
 			$inputs = JFactory::getApplication()->input;
 			$option = $inputs->getString('option', null);
 			$id = $inputs->getInt('id', 0);
-			$rgaatask = $inputs->getString('rgaatask', null);
+			$rgaatask = $inputs->getString('rgaac3rbtask', null);
 
 			if (strtolower($option) == 'com_templates' && $id && $rgaatask == "export")
 			{
@@ -64,7 +64,7 @@ class plgSystemRgaac3rb extends JPlugin
 
 				header('Content-Description: File Transfer');
 				header('Content-type: application/txt');
-				header('Content-Disposition: attachment; filename="' . $result->template . '_settings_' . date('d-m-Y') . '.json"');
+				header('Content-Disposition: attachment; filename="' . $result->template . '_settings_' . date('YmdHis') . '.json"');
 				header('Content-Transfer-Encoding: binary');
 				header('Expires: 0');
 				header('Cache-Control: must-revalidate');
