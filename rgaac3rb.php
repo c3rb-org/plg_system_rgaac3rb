@@ -16,20 +16,7 @@ class plgSystemRgaac3rb extends JPlugin
 
 		$this->app = JFactory::getApplication();
 
-		$name = false;
-		if ($this->app->isSite())
-		{
-			$name = $this->params->get('sitelessc', 'lessphp-1.7.0.3');
-		}
-		else if ($this->app->isAdmin())
-		{
-			$name = $this->params->get('adminlessc', 'lessphp-1.7.0.3');
-		}
-
-		if ($name && file_exists($file = dirname(__FILE__) . '/lessc/' . $name . '.php'))
-		{
-			require_once $file;
-		}
+		require_once dirname(__FILE__) . '/lessc/lessphp-1.7.0.5.php' ;
 	}
 
 	public function onAfterRoute()
