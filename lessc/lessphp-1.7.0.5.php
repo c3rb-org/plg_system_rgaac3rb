@@ -64,6 +64,10 @@ class lessc3rb{
 	}
 
 	public function setVariable($name, $value){
+		//Permet d'éviter l'erreur de parsing dans le ModifyVars 
+		// quand il s'agit d'un path vers un fichier
+		if(strpos($value, '/') !== false)
+			$value = "'" . $value . "'";
 		$this->registeredVars[$name] = $value;
 	}
 
