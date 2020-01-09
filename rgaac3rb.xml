@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="plugin" version="3.4" method="upgrade" client="site" group="system">
   <name>plg_system_rgaac3rb</name>
-  <creationDate>28/04/2017</creationDate>
+  <creationDate>09/01/2020</creationDate>
   <author>C3rb Informatique</author>
   <authorEmail>orphee@c3rb.fr</authorEmail>
   <authorUrl>www.c3rb.org</authorUrl>
-  <copyright>Copyright (C) 2015 C3RB Informatique. All rights reserved.</copyright>
-  <version>1.0.4</version>
+  <copyright>Copyright (C) 2020 C3RB Informatique. All rights reserved.</copyright>
+  <version>1.1.0</version>
   <description>PLG_SYSTEM_RGAAC3RB_XML_DESC</description>
   <files>
     <filename plugin="rgaac3rb">rgaac3rb.php</filename>
