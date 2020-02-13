@@ -210,6 +210,9 @@ class plgSystemRgaac3rb extends JPlugin
 		{
 			$less->setSourceMap(true);
 			$less->setSourceMapWriteTo(JPATH_BASE . '/templates/c3rb_rgaa/css/template.css.map');
+			/* Attention avec les liens symboliques ... */
+			//$less->setSourceMapBasepath('D:\_REPOSITORY\template_RGAA_C3rb\css');
+			$less->setSourceMapBasepath(JPATH_BASE . '/templates/c3rb_rgaa/css/');
 			$less->setSourceMapURL(JUri::base() . 'templates/c3rb_rgaa/css/template.css.map');
 		}
 

@@ -123,7 +123,8 @@ class lessc3rb{
 		}
 
 		$options['sourceMap'] = $this->sourceMap;
-		$options['sourceMapFilename'] = $this->sourceMapBasepath;
+		/*$options['sourceMapFilename'] = $this->sourceMapBasepath;*/
+		$options['sourceMapBasepath'] = $this->sourceMapBasepath;
 		$options['sourceMapWriteTo'] = $this->sourceMapWriteTo;
 		$options['sourceMapURL'] = $this->sourceMapURL;
 
