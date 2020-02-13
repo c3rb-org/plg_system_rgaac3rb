@@ -209,11 +209,11 @@ class plgSystemRgaac3rb extends JPlugin
 		if(JDEBUG)
 		{
 			$less->setSourceMap(true);
-			$less->setSourceMapWriteTo(JPATH_BASE . '/templates/c3rb_rgaa/css/template.css.map');
+			$less->setSourceMapWriteTo(JPATH_BASE . '/templates/'.$this->app->getTemplate().'/css/template.css.map');
 			/* Attention avec les liens symboliques ... */
 			//$less->setSourceMapBasepath('D:\_REPOSITORY\template_RGAA_C3rb\css');
-			$less->setSourceMapBasepath(JPATH_BASE . '/templates/c3rb_rgaa/css/');
-			$less->setSourceMapURL(JUri::base() . 'templates/c3rb_rgaa/css/template.css.map');
+			$less->setSourceMapBasepath(JPATH_BASE . '/templates/'.$this->app->getTemplate().'/css/');
+			$less->setSourceMapURL(JUri::base() . 'templates/'.$this->app->getTemplate().'/css/template.css.map');
 		}
 
 		if ((boolean) $this->params->get('less_template', 0))
