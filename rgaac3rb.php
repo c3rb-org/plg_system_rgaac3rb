@@ -206,6 +206,13 @@ class plgSystemRgaac3rb extends JPlugin
 			$formatter->indentChar = "\t";
 		}
 
+		if(JDEBUG)
+		{
+			$less->setSourceMap(true);
+			$less->setSourceMapWriteTo(JPATH_BASE . '/templates/c3rb_rgaa/css/template.css.map');
+			$less->setSourceMapURL(JUri::base() . 'templates/c3rb_rgaa/css/template.css.map');
+		}
+
 		if ((boolean) $this->params->get('less_template', 0))
 		{
 			$lessVarParams = $this->parseTemplateParams();
@@ -235,7 +242,7 @@ class plgSystemRgaac3rb extends JPlugin
 		//compile cache file
 		$newCache = $less->cachedCompile($cache, $force);
 
-		if (!is_array($cache) || $newCache["updated"] > $cache["updated"])
+		if (!is_array($cache) || $newCache["updated"] >= $cache["updated"])
 		{
 			file_put_contents($cacheFile, serialize($newCache));
 			file_put_contents($outputFile, $newCache['compiled']);

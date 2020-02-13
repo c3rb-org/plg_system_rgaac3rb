@@ -33,6 +33,11 @@ class lessc3rb{
 	protected $registeredVars = array();
 	private $formatterName;
 
+	private $sourceMap = false;
+	private $sourceMapBasepath = null;
+	private $sourceMapWriteTo = null;
+	private $sourceMapURL = null;
+
 	public function __construct($lessc=null, $sourceName=null) {}
 
 	public function setImportDir($dirs) {
@@ -47,6 +52,26 @@ class lessc3rb{
 	public function setFormatter($name)
 	{
 		$this->formatterName = $name;
+	}
+
+	public function setSourceMap($value)
+	{
+		$this->sourceMap = $value;
+	}
+
+	public function setSourceMapBasepath($basepath)
+	{
+		$this->sourceMapBasepath = $basepath;
+	}
+
+	public function setSourceMapWriteTo($writeTo)
+	{
+		$this->sourceMapWriteTo = $writeTo;
+	}
+
+	public function setSourceMapURL($url)
+	{
+		$this->sourceMapURL = $url;
 	}
 
 	public function setPreserveComments($preserve) {}
@@ -96,6 +121,12 @@ class lessc3rb{
 				$options['compress'] = true;
 				break;
 		}
+
+		$options['sourceMap'] = $this->sourceMap;
+		$options['sourceMapFilename'] = $this->sourceMapBasepath;
+		$options['sourceMapWriteTo'] = $this->sourceMapWriteTo;
+		$options['sourceMapURL'] = $this->sourceMapURL;
+
 		return $options;
 	}
 
